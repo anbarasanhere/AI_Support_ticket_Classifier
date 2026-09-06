@@ -29,9 +29,11 @@ pip install -r requirements.txt
 cp .env.example .env
 # Edit .env and set OPENAI_API_KEY
 
-# 4. Run the API
-uvicorn main:app --reload
+# 4. Run the API (use python -m so the venv interpreter is used)
+python -m uvicorn main:app --reload
 ```
+
+If you see `ModuleNotFoundError: No module named 'fastapi'`, you invoked a system `uvicorn` instead of the venv. Recreate the venv, install deps, then run with `python -m uvicorn` as above.
 
 Open the interactive docs at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs), or the demo UI at `demo_ui/index.html`.
 

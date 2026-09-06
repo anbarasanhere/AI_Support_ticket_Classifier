@@ -126,10 +126,32 @@ def check_injection(text: str) -> InjectionCheckResult:
         return InjectionCheckResult(is_safe=True)
 
     except Exception as exc:
+        if _is_auth_error(exc):
+            logger.error("Guard LLM authentication failed: %s", exc)
+            raise
         # Fail safe: if the guard itself errors, block the request rather than
         # letting unvetted input reach the main classifier.
         logger.error("Guard LLM call failed (%s) — blocking input as a precaution.", exc)
         return InjectionCheckResult(is_safe=False, detected_pattern="guard_error")
+
+
+def _is_auth_error(exc: BaseException) -> bool:
+    """True when the failure is a missing/invalid API key, not a model judgement."""
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        name = type(current).__name__.lower()
+        msg = str(current).lower()
+        if (
+            "authentication" in name
+            or "invalid_api_key" in msg
+            or "incorrect api key" in msg
+            or "error code: 401" in msg
+        ):
+            return True
+        current = current.__cause__ or current.__context__
+    return False
 
 
 # ---------------------------------------------------------------------------

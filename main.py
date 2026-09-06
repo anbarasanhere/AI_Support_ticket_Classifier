@@ -7,8 +7,13 @@ import logging
 from contextlib import asynccontextmanager # used to define startup/shutdown events
 
 from dotenv import load_dotenv # loads environment variables from a .env file
+from pathlib import Path
+
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException # core fastapi objects
 from fastapi.middleware.cors import CORSMiddleware # allows browsers to access the API
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field # pydantic is responsible for data validation and parsing
 
 from graph import run_pipeline 
@@ -16,7 +21,6 @@ from production_modules.prompt_versioning import list_versions, get_active_versi
 from production_modules.cost_calculator import session_tracker
 
 # Phase 2: Configuring the application
-load_dotenv()
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(name)s | %(message)s") 
 logger = logging.getLogger(__name__) # creates a scoped logger using the current module name
 
@@ -90,9 +94,17 @@ app.add_middleware(
 )
 
 
+DEMO_UI = Path(__file__).parent / "demo_ui" / "index.html"
+
+
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
+@app.get("/")
+async def demo():
+    return FileResponse(DEMO_UI)
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
