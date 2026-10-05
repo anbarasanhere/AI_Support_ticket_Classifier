@@ -241,12 +241,3 @@ curl -X POST http://localhost:8000/classify \
 
 Interactive docs: `http://localhost:8000/docs`
 
----
-
-## Next step for deep understanding
-
-Ask for a walkthrough of the **happy (good) flow** starting from:
-
-> `POST /classify` → `run_pipeline` → `pii_redact_node` → `injection_check_node` (safe) → `classify_node` → `validate_node` (pass) → `cost_log_node` → `ClassifyResponse`
-
-Use one sample ticket and follow state field-by-field through each node.
