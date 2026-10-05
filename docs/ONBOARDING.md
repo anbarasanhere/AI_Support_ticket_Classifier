@@ -138,8 +138,6 @@ That sequence, with one sample ticket, is the complete core story of the project
 
 ## 5. Guided Tour — Where to Start
 
-Learn the project in this order. Do not jump into failure paths until the happy path is clear.
-
 ### Step 1 — Contracts first: [`schema.py`](../schema.py)
 
 Learn the allowed enums and the shape of `TicketClassification` / `TicketState`. Everything else produces or mutates these.
