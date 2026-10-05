@@ -1,4 +1,4 @@
-# Support Ticket Classifier — Onboarding Guide
+# Support Ticket Classifier — Guide
 
 A map of the project: what it does, how the LangGraph pipeline works, and the best order to learn the codebase.
 
