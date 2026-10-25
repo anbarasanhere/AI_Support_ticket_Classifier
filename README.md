@@ -2,6 +2,8 @@
 
 Production-aware AI support ticket classifier. Send raw customer ticket text; get structured routing data — category, team, priority, sentiment, and confidence — via GPT-4o-mini, wrapped in reliability layers.
 
+https://github.com/user-attachments/assets/74ed5ced-3608-4b34-9c2b-b7175ad2caf8
+
 ## Features
 
 - PII redaction
